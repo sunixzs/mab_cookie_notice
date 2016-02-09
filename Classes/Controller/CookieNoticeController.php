@@ -43,6 +43,14 @@ class CookieNoticeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 		if ($GLOBALS[ "TSFE" ]->fe_user->getKey ( "ses", "MabCookieNoticePi1" )) {
 			return "";
 		}
+		
+		// add Stylesheet files
+		if (isset ( $this->settings[ 'includes' ][ 'StyleSheets' ] ) && is_array ( $this->settings[ 'includes' ][ 'StyleSheets' ] )) {
+			foreach ( $this->settings[ 'includes' ][ 'StyleSheets' ] as $path ) {
+				echo $path;
+				$GLOBALS[ 'TSFE' ]->getPageRenderer ()->addCssFile ( $path, 'stylesheet', 'screen', '', true, false, "", true, "|" );
+			}
+		}
 	}
 	
 	/**
