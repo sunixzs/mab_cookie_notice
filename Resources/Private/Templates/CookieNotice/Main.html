@@ -1,0 +1,17 @@
+<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'StyleSheets/Pi1.css')}" media="screen">
+<div id="mab-cookie-notice-wrap">
+	<div id="mab-cookie-notice">
+		<span class="notice">{f:translate(key:'notice')}</span>
+		<f:link.page pageUid="{settings.read_more_pid}" class="mab-cookie-notice-read-more iframe" target="_blank">{f:translate(key:'read_more')}</f:link.page>
+		<f:link.action controller="CookieNotice" action="setMainCookie" pageType="{settings.setMainCookie.type}" noCacheHash="true" class="mab-cookie-notice-button">{f:translate(key:'button')}</f:link.action>
+		<script>
+		(function ($) {
+			$("#mab-cookie-notice .mab-cookie-notice-button").click(function (e) {
+				e.preventDefault();
+				$.get($(this).attr("href"));
+				$("#mab-cookie-notice-wrap").fadeOut("slow");
+			});
+		})(jQuery);
+		</script>
+	</div>
+</div>

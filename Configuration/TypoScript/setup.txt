@@ -1,0 +1,56 @@
+plugin.tx_mabcookienotice {
+	view {
+		templateRootPaths.0 = {$plugin.tx_mabcookienotice.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_mabcookienotice.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_mabcookienotice.view.layoutRootPath}
+	}
+	
+	settings {
+		read_more_pid = {$plugin.tx_mabcookienotice.settings.read_more_pid}
+		setMainCookie.type = {$plugin.tx_mabcookienotice.settings.setMainCookie.type}
+	}
+}
+
+# add the notice at the bottom of the page
+page.999 = USER
+page.999 {
+	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	extensionName = MabCookieNotice
+	pluginName = Pi1
+	vendorName = MAB
+	controller = CookieNotice
+	switchableControllerActions {
+		CookieNotice {
+			1 = main
+		}
+	}
+	settings < plugin.tx_mabcookienotice.settings
+}
+
+# configuration for the ajax call to set the cookie to prevent showing the notice again
+tx_mabcookienotice_setMainCookie = PAGE
+tx_mabcookienotice_setMainCookie {
+	typeNum = {$plugin.tx_mabcookienotice.settings.setMainCookie.type}
+	config {
+		disableAllHeaderCode = 1
+		xhtml_cleaning = 0
+		admPanel = 0
+		additionalHeaders = Content-type: text/plain
+		no_cache = 1
+		debug = 0
+	}
+	
+	10 = USER
+	10 {
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		extensionName = MabCookieNotice
+		pluginName = Pi1
+		vendorName = MAB
+		controller = CookieNotice
+		switchableControllerActions {
+			CookieNotice {
+				1 = setMainCookie
+			}
+		}
+	}
+}

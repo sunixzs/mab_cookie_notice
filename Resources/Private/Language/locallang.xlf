@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="de" datatype="plaintext" original="messages" date="2015-11-18T10:16:17Z" product-name="mab_cookie_notice">
+		<header/>
+		<body>
+			<trans-unit id="notice">
+				<source>Cookies erleichtern uns die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden.</source>
+			</trans-unit>
+			<trans-unit id="read_more">
+				<source>Mehr erfahren</source>
+			</trans-unit>
+			<trans-unit id="button">
+				<source>OK</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,15 @@
+plugin.tx_mabcookienotice {
+	view {
+		# cat=plugin.tx_mabcookienotice/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:mab_cookie_notice/Resources/Private/Templates/
+		# cat=plugin.tx_mabcookienotice/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:mab_cookie_notice/Resources/Private/Partials/
+		# cat=plugin.tx_mabcookienotice/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:mab_cookie_notice/Resources/Private/Layouts/
+	}
+	
+	settings {
+		read_more_pid = 1
+		setMainCookie.type = 76534
+	}
+}

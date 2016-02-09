@@ -1,0 +1,24 @@
+#mab-cookie-notice-wrap {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgb(31,31,31);
+	background-color: rgba(31,31,31,.8);
+	padding: 1em;
+	z-index: 10;
+}
+
+#mab-cookie-notice {
+	max-width: 50em;
+	margin: 0 auto;
+	color: white;
+	text-align: center;
+	font-size: 11px;
+	line-height: 130%;
+}
+
+#mab-cookie-notice a {
+	color: white;
+	text-decoration: underline;
+}
