@@ -11,5 +11,11 @@ plugin.tx_mabcookienotice {
 	settings {
 		read_more_pid = 1
 		setMainCookie.type = 76534
+		
+		analytics {
+			enable = 0
+			UA = UA-00000000-0
+			url = auto
+		}
 	}
 }

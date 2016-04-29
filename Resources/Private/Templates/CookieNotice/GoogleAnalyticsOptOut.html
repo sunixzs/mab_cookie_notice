@@ -1,0 +1,22 @@
+<p>
+	{f:translate(key:'googleAnalyticsOptOut_description')}
+	<br /><a onclick="alert('{f:translate(key:'googleAnalyticsOptOut_deactivatedMessage')}');" href="javascript:gaOptout()">{f:translate(key:'googleAnalyticsOptOut_link')}</a>
+</p>
+<p id="mab-cookie-notice-ga-disabled-notice" style="display: none;">{f:translate(key:'googleAnalyticsOptOut_disabled_notice')}</p>
+<p id="mab-cookie-notice-ga-enabled-notice" style="display: none;">{f:translate(key:'googleAnalyticsOptOut_enabled_notice')}</p>
+<script>
+//Opt-out function
+if (typeof gaOptout != "function"){
+	function gaOptout() {
+		document.cookie = 'ga-disable-{settings.analytics.UA}=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+		window[disableStr] = true;
+		document.getElementById("mab-cookie-notice-ga-enabled-notice").style.display = "block";
+		document.getElementById("mab-cookie-notice-ga-disabled-notice").style.display = "none";
+	}
+}
+if (document.cookie.indexOf('ga-disable-{settings.analytics.UA}=true') > -1) {
+	document.getElementById("mab-cookie-notice-ga-enabled-notice").style.display = "block";
+} else {
+	document.getElementById("mab-cookie-notice-ga-disabled-notice").style.display = "block";
+}
+</script>

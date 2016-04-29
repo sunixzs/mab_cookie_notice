@@ -4,13 +4,32 @@
 		<header/>
 		<body>
 			<trans-unit id="notice">
-				<source>Cookies erleichtern uns die Bereitstellung unserer Dienste. Mit der Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies verwenden.</source>
+				<source>Cookies erleichtern uns die Bereitstellung unserer Dienste - u.A. ein Cookie für den Dienst Google Analytics. Mit dem Klick auf Cookies verwenden erklären Sie sich damit einverstanden, dass wir Cookies verwenden.</source>
 			</trans-unit>
-			<trans-unit id="read_more">
+			<trans-unit id="button_read_more">
 				<source>Mehr erfahren</source>
 			</trans-unit>
-			<trans-unit id="button">
-				<source>OK</source>
+			<trans-unit id="button_yes">
+				<source>Cookies verwenden</source>
+			</trans-unit>
+			<trans-unit id="button_no">
+				<source>Keine Cookies verwenden</source>
+			</trans-unit>
+			
+			<trans-unit id="googleAnalyticsOptOut_description">
+				<source>Sie können die Erfassung durch Google Analytics auf dieser Domain verhindern, indem Sie auf folgenden Link klicken. Es wird ein Opt-Out-Cookie gesetzt, der die zukünftige Erfassung Ihrer Daten beim Besuch dieser Website verhindert:</source>
+			</trans-unit>
+			<trans-unit id="googleAnalyticsOptOut_link">
+				<source>Google Analytics auf dieser Domain deaktivieren</source>
+			</trans-unit>
+			<trans-unit id="googleAnalyticsOptOut_deactivatedMessage">
+				<source>Google Analytics wurde deaktiviert</source>
+			</trans-unit>
+			<trans-unit id="googleAnalyticsOptOut_enabled_notice">
+				<source>Cookie-Status: Das Cookie ist in Ihrem Browser gesetzt.</source>
+			</trans-unit>
+			<trans-unit id="googleAnalyticsOptOut_disabled_notice">
+				<source>Cookie-Status: Das Cookie ist in Ihrem Browser nicht gesetzt.</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -39,12 +39,21 @@ class CookieNoticeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 	 * @return void
 	 */
 	public function mainAction() {
-		// if cookie is allready set show nothing
-		if ($GLOBALS[ "TSFE" ]->fe_user->getKey ( "ses", "MabCookieNoticePi1" )) {
+		if ($this->request->hasArgument ( "setMainCookie" )) {
+			// Called via AJAX to set the cookie to prevent showing the notice again.
+			$GLOBALS[ 'TSFE' ]->fe_user->setKey ( "ses", "MabCookieNoticePi1", TRUE );
 			return "";
 		}
 		
-		// add Stylesheet files
+		// if cookie is allready set show nothing // or include Google Analytics if enabled
+		if ($GLOBALS[ "TSFE" ]->fe_user->getKey ( "ses", "MabCookieNoticePi1" )) {
+			if (( boolean ) $this->settings[ 'analytics' ][ 'enable' ]) {
+				$this->forward ( "googleAnalytics" );
+			}
+			return "";
+		}
+		
+		// Default-functionality: add Stylesheet files and show message
 		if (isset ( $this->settings[ 'includes' ][ 'StyleSheets' ] ) && is_array ( $this->settings[ 'includes' ][ 'StyleSheets' ] )) {
 			foreach ( $this->settings[ 'includes' ][ 'StyleSheets' ] as $path ) {
 				$GLOBALS[ 'TSFE' ]->getPageRenderer ()->addCssFile ( $path, 'stylesheet', 'screen', '', true, false, "", true, "|" );
@@ -53,13 +62,24 @@ class CookieNoticeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 	}
 	
 	/**
-	 * action setMainCookie
-	 * Called via AJAX to set the cookie to prevent showing the notice again.
+	 * action googleAnalytics
 	 *
 	 * @return void
 	 */
-	public function setMainCookieAction() {
-		$GLOBALS[ 'TSFE' ]->fe_user->setKey ( "ses", "MabCookieNoticePi1", TRUE );
+	public function googleAnalyticsAction() {
+		if (( boolean ) $this->settings[ 'analytics' ][ 'enable' ]) {
+			$GLOBALS[ 'TSFE' ]->getPageRenderer ()->addJsFooterInlineCode ( "mab_cookie_notice googleAnalytics", $this->view->render () );
+		}
 		return "";
 	}
+	
+	/**
+	 * action googleAnalyticsOptOut
+	 *
+	 * @return void
+	 */
+	public function googleAnalyticsOptOutAction() {
+	}
+	
+	
 }

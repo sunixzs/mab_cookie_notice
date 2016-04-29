@@ -1,16 +1,59 @@
 <div id="mab-cookie-notice-wrap">
 	<div id="mab-cookie-notice">
 		<span class="notice">{f:translate(key:'notice')}</span>
-		<f:link.page pageUid="{settings.read_more_pid}" class="mab-cookie-notice-read-more iframe" target="_blank">{f:translate(key:'read_more')}</f:link.page>
-		<f:link.action controller="CookieNotice" action="setMainCookie" pageType="{settings.setMainCookie.type}" noCacheHash="true" class="mab-cookie-notice-button">{f:translate(key:'button')}</f:link.action>
+		<div class="mab-cookie-notice-buttons">
+			<f:link.page pageUid="{settings.read_more_pid}" class="mab-cookie-notice-read-more" target="_blank">{f:translate(key:'button_read_more')}</f:link.page>
+			&middot; <a href="#" class="mab-cookie-notice-button-yes">{f:translate(key:'button_yes')}</a>
+			&middot; <a href="#" class="mab-cookie-notice-button-no">{f:translate(key:'button_no')}</a>
+		</div>
 		<script>
 		(function ($) {
-			$("#mab-cookie-notice .mab-cookie-notice-button").click(function (e) {
+			var $wrap = $("#mab-cookie-notice-wrap");
+			$(".mab-cookie-notice-button-yes", $wrap).click(function (e) {
 				e.preventDefault();
-				$.get($(this).attr("href"));
-				$("#mab-cookie-notice-wrap").fadeOut("slow");
+				$.get('<f:uri.page pageUid="1" />', {
+					eID : 'ajaxMabCookieNoticeControllerAction',
+					vendorName: 'MAB',
+					extensionName: 'MabCookieNotice',
+					pluginName: 'Pi1',
+					controllerName: 'CookieNotice',
+					actionName: 'main',
+					formatName: 'txt',
+					arguments: {
+						setMainCookie : 1
+					}
+				});
+				$wrap.fadeOut("slow");
+			});
+			$(".mab-cookie-notice-button-no", $wrap).click(function (e) {
+				e.preventDefault();
+				$wrap.fadeOut("slow");
 			});
 		})(jQuery);
+		
+		// Disable tracking if the opt-out cookie exists.
+		if (document.cookie.indexOf('ga-disable-{settings.analytics.UA}=true') > -1) {
+		  window[disableStr] = true;
+		}
+	
+		// Opt-out function
+		if (typeof gaOptout != "function"){
+			function gaOptout() {
+				document.cookie = 'ga-disable-{settings.analytics.UA}=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+				window[disableStr] = true;
+				document.getElementById("mab-cookie-notice-ga-enabled-notice").style.display = "block";
+				document.getElementById("mab-cookie-notice-ga-disabled-notice").style.display = "none";
+			}
+		}
+		
+		//(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		//	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		//	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		//	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		//
+		//	ga('create', '{settings.analytics.UA}', '{settings.analytics.url}');
+		//	ga('set', 'anonymizeIp', true);
+		//	ga('send', 'pageview');
 		</script>
 	</div>
 </div>

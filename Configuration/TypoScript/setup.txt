@@ -14,6 +14,12 @@ plugin.tx_mabcookienotice {
 				Pi1 = typo3conf/ext/mab_cookie_notice/Resources/Public/StyleSheets/Pi1.css
 			}
 		}
+		
+		analytics {
+			enable = {$plugin.tx_mabcookienotice.settings.analytics.enable}
+			UA = {$plugin.tx_mabcookienotice.settings.analytics.UA}
+			url = {$plugin.tx_mabcookienotice.settings.analytics.url}
+		}
 	}
 }
 
