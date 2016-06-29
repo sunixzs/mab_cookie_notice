@@ -8,6 +8,8 @@ plugin.tx_mabcookienotice {
 	settings {
 		read_more_pid = {$plugin.tx_mabcookienotice.settings.read_more_pid}
 		setMainCookie.type = {$plugin.tx_mabcookienotice.settings.setMainCookie.type}
+		cookieMode = {$plugin.tx_mabcookienotice.settings.cookieMode}
+		cookieLifetime = {$plugin.tx_mabcookienotice.settings.cookieLifetime}
 		 
 		includes {
 			StyleSheets {
