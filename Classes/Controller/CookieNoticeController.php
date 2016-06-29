@@ -84,7 +84,7 @@ class CookieNoticeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 		} else {
 			if ($this->request->hasArgument ( "setMainCookie" )) {
 				// Called via AJAX to set the cookie to prevent showing the notice again.
-				setcookie ( "MabCookieNoticePi1", "allreadyShown", time () + 3600 * 24 * $this->cookieLifetime );
+				setcookie ( "MabCookieNoticePi1", "allreadyShown", time () + 3600 * 24 * $this->cookieLifetime, "/" );
 				return "";
 			}
 			
