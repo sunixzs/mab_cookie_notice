@@ -33,24 +33,69 @@ namespace MAB\MabCookieNotice\Controller;
 class CookieNoticeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	
 	/**
+	 * Either use Typo3-Session or a Cookie.
+	 * @var string $cookieMode
+	 */
+	protected $cookieMode = "cookie";
+	
+	/**
+	 * Lifetime of a Cookie in days
+	 * @var integer $cookieLifetime
+	 */
+	protected $cookieLifetime = 365;
+	
+	/**
 	 * action main
 	 * Shows the cookie notice
 	 *
 	 * @return void
 	 */
 	public function mainAction() {
-		if ($this->request->hasArgument ( "setMainCookie" )) {
-			// Called via AJAX to set the cookie to prevent showing the notice again.
-			$GLOBALS[ 'TSFE' ]->fe_user->setKey ( "ses", "MabCookieNoticePi1", TRUE );
-			return "";
+		// set some settings...
+		// ... cookieMode - either session or cookie
+		if (isset ( $this->settings[ 'cookieMode' ] ) && in_array ( $this->settings[ 'cookieMode' ], [ 
+				"session",
+				"cookie" 
+		] )) {
+			$this->cookieMode = $this->settings[ 'cookieMode' ];
 		}
 		
-		// if cookie is allready set show nothing // or include Google Analytics if enabled
-		if ($GLOBALS[ "TSFE" ]->fe_user->getKey ( "ses", "MabCookieNoticePi1" )) {
-			if (( boolean ) $this->settings[ 'analytics' ][ 'enable' ]) {
-				$this->forward ( "googleAnalytics" );
+		// cookieLifetime in days, if cookieMode is cookie
+		if ($this->cookieMode == "cookie" && isset ( $this->settings[ 'cookieLifetime' ] ) && ( integer ) $this->settings[ 'cookieLifetime' ] > 0) {
+			$this->cookieLifetime = ( integer ) $this->settings[ 'cookieLifetime' ];
+		}
+		
+		// differentiate between session and cookie
+		if ($this->cookieMode == "session") {
+			if ($this->request->hasArgument ( "setMainCookie" )) {
+				// Called via AJAX to set the cookie to prevent showing the notice again.
+				$GLOBALS[ 'TSFE' ]->fe_user->setKey ( "ses", "MabCookieNoticePi1", TRUE );
+				return "";
 			}
-			return "";
+			
+			// if cookie is allready set show nothing ...
+			if ($GLOBALS[ "TSFE" ]->fe_user->getKey ( "ses", "MabCookieNoticePi1" )) {
+				// ... or include Google Analytics if enabled
+				if (( boolean ) $this->settings[ 'analytics' ][ 'enable' ]) {
+					$this->forward ( "googleAnalytics" );
+				}
+				return "";
+			}
+		} else {
+			if ($this->request->hasArgument ( "setMainCookie" )) {
+				// Called via AJAX to set the cookie to prevent showing the notice again.
+				setcookie ( "MabCookieNoticePi1", "allreadyShown", time () + 3600 * 24 * $this->cookieLifetime );
+				return "";
+			}
+			
+			// if cookie is allready set show nothing ...
+			if (isset ( $_COOKIE[ "MabCookieNoticePi1" ] ) && $_COOKIE[ "MabCookieNoticePi1" ] == "allreadyShown") {
+				// ... or include Google Analytics if enabled
+				if (( boolean ) $this->settings[ 'analytics' ][ 'enable' ]) {
+					$this->forward ( "googleAnalytics" );
+				}
+				return "";
+			}
 		}
 		
 		// Default-functionality: add Stylesheet files and show message
@@ -80,6 +125,4 @@ class CookieNoticeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 	 */
 	public function googleAnalyticsOptOutAction() {
 	}
-	
-	
 }
