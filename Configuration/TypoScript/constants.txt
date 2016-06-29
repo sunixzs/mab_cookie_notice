@@ -9,8 +9,17 @@ plugin.tx_mabcookienotice {
 	}
 	
 	settings {
+		# Pid of the link in the notice
 		read_more_pid = 1
+		
+		# pageType of the ajax-call to set the cookie
 		setMainCookie.type = 76534
+		
+		# Either use session or cookie
+		cookieMode = cookie
+		
+		# Lifetime of a cookie in days
+		cookieLifetime = 365
 		
 		analytics {
 			enable = 0
